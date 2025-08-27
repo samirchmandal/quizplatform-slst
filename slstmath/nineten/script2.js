@@ -1,22 +1,19 @@
-// script.js
-//import { questions } from './quiz1.js'; // Import questions from the desired quiz data file
-// If you want to switch quizzes, change 'quiz1.js' to 'quiz2.js' or another file.
 const questions = await fetch('../../.netlify/functions/slst910test1').then(response=> response.json())
 // Global variables to store student information
 let studentName = '';
 let studentEmail = '';
-let minutes = 60;
+let minutes = 60; // Numer of minutes for the exam
 
 //Global Variables to set positive and negative markings
-let negativePerQuestion = 0
-let positivePerQuestion = 1;
+let negativePerQuestion = 0  //negative marking per Question
+let positivePerQuestion = 1; //marks for per question
 
 // Quiz state variables (initialized after successful login)
 let questionStates = []; // Will be initialized with questions.length after login
 let userAnswers = {}; // Will be initialized after login
 
 let currentQuestionIndex = 0;
-const questionsPerPage = 1; // Display one question at a time
+const questionsPerPage = 2; // Display one question at a time 
 
 // DOM elements for login
 const loginContainer = document.getElementById('login-container');

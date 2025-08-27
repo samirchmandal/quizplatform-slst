@@ -404,7 +404,7 @@ function calculateScore() {
 async function sendToGoogleSheet(data) {
     // ⚠️ IMPORTANT: Replace 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE' with your actual deployed script URL.
  
-const gasURL = 'https://script.google.com/macros/s/AKfycbzHowDWdICuNeMT83Zljg12Etajelr_warTid79OsXfrAdXQDq_5CVOL93hac_29r1C/exec';
+const gasURL = 'https://script.google.com/macros/s/AKfycbwWTgS79hc3sHMV7T2z4SephHJDOdN53crtuxyLaOTnHWt-CKeg0vCU2uLZQAM8ElqkZA/exec';
     try {
         const response = await fetch(gasURL, {
             method: 'POST',

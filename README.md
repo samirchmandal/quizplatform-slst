@@ -1,0 +1,1 @@
+This is a quiz platform for giving mcq quizzes to students for IIT JAM, SLST Mathematics, CSIR NET, JEE Main and Advanced. Here students can see their marks after submitting the quiz and after that they will be able to download the question paper in pdf format.

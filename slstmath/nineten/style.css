@@ -1,0 +1,302 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f0f4f8;
+    color: #333;
+    line-height: 1.6;
+}
+.container {
+    max-width: 100%;
+    /*margin: 20px auto; */
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 0px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+.question-card {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+}
+.question-text {
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #2d3748;
+    font-size: 1.05rem;
+}
+.option-label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+.option-label:hover {
+    background-color: #edf2f7;
+}
+input[type="radio"] {
+    margin-right: 10px;
+    accent-color: #3b82f6;
+    transform: scale(1.2);
+}
+.submit-btn {
+    background-color: #3b82f6;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+    display: block;
+    margin: 30px auto 0;
+    cursor: pointer;
+    border: none;
+}
+.submit-btn:hover {
+    background-color: #2563eb;
+    transform: translateY(-2px);
+}
+.submit-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(59, 130, 246, 0.3);
+}
+.score-card {
+    background-color: #e0f2fe;
+    border: 1px solid #90cdf4;
+    border-radius: 10px;
+    padding: 25px;
+    text-align: center;
+    margin-top: 30px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #007bff;
+    display: none; /* Hidden by default */
+}
+.correct-answer {
+    background-color: #d1fae5;
+    border-color: #34d399;
+}
+.wrong-answer {
+    background-color: #fee2e2;
+    border-color: #ef4444;
+}
+.correct-text {
+    color: #10b981;
+    font-weight: 600;
+}
+.wrong-text {
+    color: #ef4444;
+    font-weight: 600;
+}
+.explanation {
+    margin-top: 10px;
+    font-size: 0.95rem;
+    color: #555;
+    background-color: #f0f4f8;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border-left: 3px solid #3b82f6;
+}
+.navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.nav-btn {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.nav-btn:hover {
+    background-color: #45a049;
+}
+.nav-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+/* Custom modal styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    justify-content: center;
+    align-items: center;
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 25px 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+}
+.modal-content h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+.modal-content p {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 25px;
+}
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+.modal-btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+.modal-btn.confirm {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+}
+.modal-btn.confirm:hover {
+    background-color: #dc2626;
+    transform: translateY(-1px);
+}
+.modal-btn.cancel {
+    background-color: #e2e8f0;
+    color: #333;
+    border: 1px solid #cbd5e1;
+}
+.modal-btn.cancel:hover {
+    background-color: #cbd5e1;
+    transform: translateY(-1px);
+}
+
+/* Question Palette Specific Styles */
+#question-palette.show {
+    transform: translateX(0);
+}
+
+.palette-question-btn {
+    padding: 8px 0;
+    background-color: #4a5568; /* Grey for Not Visited */
+    color: white;
+    border: 1px solid #4a5568;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.palette-question-btn:hover {
+    background-color: #6a768e;
+    transform: translateY(-1px);
+}
+
+/* States for palette buttons */
+.palette-question-btn.answered {
+    background-color: #38a169; /* Green for Answered */
+    border-color: #2f855a;
+}
+.palette-question-btn.marked-for-review {
+    background-color: #ecc94b; /* Yellow for Marked for Review */
+    border-color: #d69e2e;
+    color: #333; /* Darker text for better contrast */
+}
+.palette-question-btn.answered.marked-for-review {
+    background-color: #9f7aea; /* Purple for Answered & Marked */
+    border-color: #805ad5;
+}
+.palette-question-btn.current {
+    background-color: #3b82f6; /* Blue for Current Question */
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* Highlight with a subtle ring */
+    font-weight: 600;
+    transform: scale(1.05);
+}
+.palette-question-btn.not-answered { /* Used after submission for not attempted */
+    background-color: #e53e3e; /* Red for not answered (after quiz submission) - consider gray if not attempted before */
+    border-color: #c53030;
+}
+
+/* Result states for palette buttons (after submission) */
+.palette-question-btn.result-correct {
+    background-color: #10b981; /* Green for correct answer in results */
+    border-color: #059669;
+}
+.palette-question-btn.result-wrong {
+    background-color: #ef4444; /* Red for wrong answer in results */
+    border-color: #dc2626;
+}
+.palette-question-btn.result-not-attempted {
+    background-color: #6b7280; /* Grey for not attempted in results */
+    border-color: #4b5563;
+}
+
+
+#question-palette-toggle-btn {
+    font-size: 1.2rem;
+}
+
+/* Ensure navigation buttons are centered within their flex container */
+.navigation-buttons {
+    justify-content: center; /* Center items horizontally */
+    gap: 15px; /* Add some space between buttons */
+}
+
+
+@media print {
+    /* Hide the login and the main quiz interface */
+    #login-container, #timer,
+    #quiz-main-container .top-bar, /* Hide the timer and CBT header */
+    #quiz-main-container .flex.justify-between.items-center, /* The time-left container */
+    #quiz-main-container .quiz-content-area .flex.justify-center, /* Navigation buttons */
+    #quiz-main-container #submit-quiz,
+    #quiz-main-container #question-palette,
+    #quiz-main-container #question-palette-toggle-btn,
+    #quiz-main-container #download-pdf-btn, /* Hide the button itself in the PDF */
+    #quiz-main-container .modal {
+        display: none !important;
+    }
+
+    /* Adjust the main content to take up the full page width */
+    /*.quiz-content-area, #all-questions-results {
+        width: 100%;
+        padding: 0 !important;
+        margin: 0 !important;
+    }*/
+    /*body, html, #quiz-main-container, .quiz-content-area {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }*/
+  .container {
+    width: 100%;
+    margin: 0px;
+    margin: auto;
+    padding: 0px !important;
+    box-shadow: none;
+
+}
+}

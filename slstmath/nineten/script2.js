@@ -2,7 +2,7 @@ const questions = await fetch('../../.netlify/functions/slst910test1').then(resp
 // Global variables to store student information
 let studentName = '';
 let studentEmail = '';
-let minutes = 60; // Numer of minutes for the exam
+let minutes = 90; // Numer of minutes for the exam
 
 //Global Variables to set positive and negative markings
 let negativePerQuestion = 0  //negative marking per Question
@@ -13,7 +13,7 @@ let questionStates = []; // Will be initialized with questions.length after logi
 let userAnswers = {}; // Will be initialized after login
 
 let currentQuestionIndex = 0;
-const questionsPerPage = 2; // Display one question at a time 
+const questionsPerPage = 1; // !Important dont change this
 
 // DOM elements for login
 const loginContainer = document.getElementById('login-container');

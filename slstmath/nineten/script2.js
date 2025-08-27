@@ -5,9 +5,10 @@ const questions = await fetch('../../.netlify/functions/slst910test1').then(resp
 // Global variables to store student information
 let studentName = '';
 let studentEmail = '';
+let minutes = 60;
 
 //Global Variables to set positive and negative markings
-let negativePerQuestion = 0.25
+let negativePerQuestion = 0
 let positivePerQuestion = 1;
 
 // Quiz state variables (initialized after successful login)
@@ -39,7 +40,7 @@ const downloadPdfBtn = document.getElementById('download-pdf-btn')
 
 // Timer elements and variables
 const timeDisplay = document.getElementById('time-display');
-let timeLeft = 60 * 60; // 60 minutes in seconds
+let timeLeft = minutes * 60; // 60 minutes in seconds
 let timerInterval;
 let quizSubmitted = false;
 

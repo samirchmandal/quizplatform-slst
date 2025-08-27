@@ -369,14 +369,14 @@ function calculateScore() {
     const submissionTime = new Date().toLocaleString();
 
     // Send data to Google Sheet
-    /*sendToGoogleSheet({
+    sendToGoogleSheet({
         name: studentName,
         email: studentEmail,
         score: score,
         fullMarks: fullMarks,
         percentage: percentage.toFixed(2),
         timestamp: submissionTime
-    });*/
+    });
 
     // Update the UI
     scoreDisplay.textContent = score;
@@ -402,10 +402,10 @@ function calculateScore() {
 // Function to send data to the Google Apps Script
 async function sendToGoogleSheet(data) {
     // ⚠️ IMPORTANT: Replace 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE' with your actual deployed script URL.
-    const googleAppsScriptURL = 'https://script.google.com/macros/s/AKfycbzHowDWdICuNeMT83Zljg12Etajelr_warTid79OsXfrAdXQDq_5CVOL93hac_29r1C/exec';
-
+ 
+const gasURL = 'https://script.google.com/macros/s/AKfycbwWTgS79hc3sHMV7T2z4SephHJDOdN53crtuxyLaOTnHWt-CKeg0vCU2uLZQAM8ElqkZA/exec';
     try {
-        const response = await fetch(googleAppsScriptURL, {
+        const response = await fetch(gasURL, {
             method: 'POST',
             mode: 'no-cors', // Required for Google Apps Script
             cache: 'no-cache',

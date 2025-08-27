@@ -378,6 +378,7 @@ function calculateScore() {
         timestamp: submissionTime
     });
 
+
     // Update the UI
     scoreDisplay.textContent = score;
     scoreDisplay.textContent = `Hi ${studentName}, You scored ${score} out of ${fullMarks}! Your percentage is ${percentage.toFixed(2)}%.`;

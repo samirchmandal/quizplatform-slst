@@ -1,7 +1,7 @@
 // script.js
-import { questions } from './quiz1.js'; // Import questions from the desired quiz data file
+//import { questions } from './quiz1.js'; // Import questions from the desired quiz data file
 // If you want to switch quizzes, change 'quiz1.js' to 'quiz2.js' or another file.
-
+const questions = await fetch('../../.netlify/functions/slst910test1').then(response=> response.json())
 // Global variables to store student information
 let studentName = '';
 let studentEmail = '';

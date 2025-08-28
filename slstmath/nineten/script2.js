@@ -540,6 +540,7 @@ function disableQuiz() {
     submitQuizBtn.classList.add('opacity-50', 'cursor-not-allowed');
     prevBtn.style.display = 'none'; // Hide navigation buttons after submission
     submitQuizBtn.style.display = 'none';
+    clearSelectionBtn.style.display = 'none'; // Hide clear selection button
     questionPaletteToggleBtn.style.display = 'none';
     nextBtn.style.display = 'none';
     markForReviewBtn.style.display = 'none'; // Hide mark for review button

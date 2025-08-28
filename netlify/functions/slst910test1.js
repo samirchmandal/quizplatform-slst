@@ -108,7 +108,7 @@ exports.handler = async (event, context) => {
             "24",
             "$20$",
             "$-24$",
-            "$$-20$$"
+            "$-20$"
         ],
         answer: 0
     },

@@ -3,6 +3,7 @@ const questions = await fetch('../../.netlify/functions/slst910test1').then(resp
 let studentName = '';
 let studentEmail = '';
 let minutes = 90; // Numer of minutes for the exam
+let indexes = ["(A)","(B)","(C)","(D)"]
 
 //Global Variables to set positive and negative markings
 let negativePerQuestion = 0  //negative marking per Question
@@ -30,6 +31,7 @@ const scoreDisplay = document.getElementById('score-display');
 const resultMessage = document.getElementById('result-message');
 const prevBtn = document.getElementById('prev-btn');
 const nextBtn = document.getElementById('next-btn');
+const clearSelectionBtn = document.getElementById('clear-selection-btn');
 const markForReviewBtn = document.getElementById('mark-for-review-btn');
 
 // DOM elements for quiz
@@ -146,7 +148,26 @@ if (loginForm) { // Ensure loginForm exists before adding event listener
     console.error("Login form (ID: 'login-form') not found in the DOM.");
 }
 
+//Function for clear selection
+clearSelectionBtn.addEventListener('click', () => {
+    if (!quizSubmitted) {
+        // Remove the answer for the current question
+        delete userAnswers[currentQuestionIndex];
+        // Mark the question as not answered
+        questionStates[currentQuestionIndex].answered = false;
 
+        // Visually uncheck the selected radio button for the current question
+        const currentQuestionCard = document.getElementById(`question-${currentQuestionIndex}`);
+        if (currentQuestionCard) {
+            const selectedRadio = currentQuestionCard.querySelector(`input[name="question-${currentQuestionIndex}"]:checked`);
+            if (selectedRadio) {
+                selectedRadio.checked = false;
+            }
+        }
+        updateMarkForReviewButtonText(); // Update button text if current question state changes
+        updatePaletteButtonStates(); // Update palette button immediately
+    }
+});
 // Function to start the timer
 function startTimer() {
     timerInterval = setInterval(() => {
@@ -237,7 +258,7 @@ function loadQuestions() {
 
 
             const optionSpan = document.createElement('span');
-            optionSpan.innerHTML = option; // Use innerHTML for MathJax
+            optionSpan.innerHTML = indexes[optionIndex]+" " + option; // Use innerHTML for MathJax
 
             optionLabel.appendChild(radioInput);
             optionLabel.appendChild(optionSpan);
@@ -265,7 +286,25 @@ function updateNavigationButtons() {
         return;
     }
     prevBtn.disabled = currentQuestionIndex === 0;
+    if (prevBtn.disabled) {
+        prevBtn.classList.add('text-gray-400', 'hover:text-gray-400', 'cursor-not-allowed');
+        prevBtn.classList.remove('text-blue-500', 'hover:text-blue-700');
+        prevBtn.title = 'You are at the first question';
+    } else {
+        prevBtn.classList.remove('text-gray-400', 'hover:text-gray-400', 'cursor-not-allowed');
+        prevBtn.classList.add('text-blue-500', 'hover:text-blue-700'); // Revert to original styles
+        prevBtn.title = 'Go to previous question';
+    }
     nextBtn.disabled = currentQuestionIndex >= questions.length - questionsPerPage;
+    if (nextBtn.disabled){
+        nextBtn.classList.add('text-gray-400', 'hover:text-gray-400', 'cursor-not-allowed');
+        nextBtn.classList.remove('text-blue-500', 'hover:text-blue-700');
+        nextBtn.title = 'You are at the last question';
+    }else{
+        nextBtn.classList.remove('text-gray-400', 'hover:text-gray-400', 'cursor-not-allowed');
+        nextBtn.classList.add('text-blue-500', 'hover:text-blue-700'); // Revert to original styles
+        nextBtn.title = 'Go to next question';
+    }
 }
 
 // Event listener for previous button
@@ -296,13 +335,15 @@ markForReviewBtn.addEventListener('click', () => {
 // Function to update the text of the Mark for Review button
 function updateMarkForReviewButtonText() {
     if (questionStates[currentQuestionIndex].markedForReview) {
-        markForReviewBtn.textContent = "Unmark for Review";
-        markForReviewBtn.classList.add('bg-purple-500', 'hover:bg-purple-600');
-        markForReviewBtn.classList.remove('bg-yellow-500', 'hover:bg-yellow-600');
+        //markForReviewBtn.textContent = "Unmark for Review";
+        markForReviewBtn.title = "Unmark for Review";
+        markForReviewBtn.classList.add('text-purple-500', 'hover:text-purple-700');
+        markForReviewBtn.classList.remove('text-yellow-500', 'hover:text-yellow-600');
     } else {
-        markForReviewBtn.textContent = "Mark for Review";
-        markForReviewBtn.classList.add('bg-yellow-500', 'hover:bg-yellow-600');
-        markForReviewBtn.classList.remove('bg-purple-500', 'hover:bg-purple-600');
+        //markForReviewBtn.textContent = "Mark for Review";
+        markForReviewBtn.title = "Mark for Review";
+        markForReviewBtn.classList.add('text-yellow-500', 'hover:text-yellow-600');
+        markForReviewBtn.classList.remove('text-purple-500', 'hover:text-purple-600');
     }
 }
 
@@ -453,7 +494,7 @@ function displayResults() {
             optionLabel.className = 'option-label';
 
             const optionSpan = document.createElement('span');
-            optionSpan.innerHTML = option;
+            optionSpan.innerHTML = indexes[optionIndex]+" "+option;
 
             optionLabel.appendChild(optionSpan);
 

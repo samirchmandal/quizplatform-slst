@@ -410,9 +410,8 @@ function calculateScore() {
             }
         }
     });
-    score = Math.min(score, 2);
+    score = Math.min(score, 30);
     const percentage = (score / fullMarks) * 100;
-    console.log(score)
     const submissionTime = new Date().toLocaleString();
 
     // Send data to Google Sheet

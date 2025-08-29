@@ -410,7 +410,7 @@ function calculateScore() {
             }
         }
     });
-
+    score = Math.min(score, 2);
     const percentage = (score / fullMarks) * 100;
     const submissionTime = new Date().toLocaleString();
 
@@ -421,7 +421,7 @@ function calculateScore() {
         correct: noOfCorrect,
         wrong: noOfWrong,
         skipped: noOfSkipped,
-        score: Math.max(score, 30),
+        score: score,
         fullMarks: fullMarks,
         percentage: percentage.toFixed(2),
         timestamp: submissionTime

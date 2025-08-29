@@ -3,7 +3,7 @@ exports.handler = async (event, context) => {
     {
         question: "Let $A = \\{1, 2, 3\\}$ and $R$ be a relation on $A$ defined by $R = \\{(1,1), (2,2), (3,3), (1,2), (2,1)\\}$. Which of the following properties does $R$ possess?",
         options: [
-            "Reflexive, Symmetric, and Transitive",
+            "Reflexive, Anti-Symmetric, and Transitive",
             "Reflexive and Symmetric, but not Transitive",
             "Reflexive, Symmetric, and Transitive (Equivalence Relation)",
             "Anti-symmetric and Transitive"

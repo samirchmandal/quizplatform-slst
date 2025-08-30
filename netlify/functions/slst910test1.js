@@ -265,7 +265,7 @@ exports.handler = async (event, context) => {
     {
         question: "The angle between the two curves $x^2 = y$ and $y^2 = x$ at their point of intersection other than the origin is",
         options: [
-            "$\\tan^{-1} (3/5)$",
+            "$\\tan^{-1} (3/4)$",
             "$\\tan^{-1} (4/3)$",
             "$\\tan^{-1} (1/2)$",
             "$\\pi/4$"

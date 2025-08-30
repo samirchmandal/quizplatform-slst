@@ -1,4 +1,5 @@
-const questions = await fetch('../../.netlify/functions/sem3mcq1').then(response=> response.json())
+const originalQuestions = await fetch('../../.netlify/functions/sem3mcq1').then(response=> response.json())
+const questions = shuffleArray(originalQuestions);
 // Global variables to store student information
 let studentName = '';
 let studentEmail = '';
@@ -168,6 +169,14 @@ clearSelectionBtn.addEventListener('click', () => {
         updatePaletteButtonStates(); // Update palette button immediately
     }
 });
+//Function for shuffling the questions array.
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+  }
+  return array;
+}
 // Function to start the timer
 function startTimer() {
     timerInterval = setInterval(() => {

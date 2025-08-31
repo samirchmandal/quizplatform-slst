@@ -1,20 +1,30 @@
+const questions = await fetch('../../.netlify/functions/slst910test1').then(response=> response.json())
 // Global variables to store student information
 let studentName = '';
 let studentEmail = '';
-const questions = await fetch('../../.netlify/functions/slst910test1').then(response=> response.json())
+let studentSubject = '';
+let studentSchool = '';
+let minutes = 90; // Numer of minutes for the exam
+let indexes = ["(A)","(B)","(C)","(D)"]
+
+//Global Variables to set positive and negative markings
+let negativePerQuestion = 0  //negative marking per Question
+let positivePerQuestion = 1; //marks for per question
+
 // Quiz state variables (initialized after successful login)
 let questionStates = []; // Will be initialized with questions.length after login
 let userAnswers = {}; // Will be initialized after login
 
 let currentQuestionIndex = 0;
-const questionsPerPage = 1; // Display one question at a time
+const questionsPerPage = 1; // !Important dont change this
 
 // DOM elements for login
 const loginContainer = document.getElementById('login-container');
 const loginForm = document.getElementById('login-form');
 const studentNameInput = document.getElementById('student-name');
 const studentEmailInput = document.getElementById('student-email');
-
+const studentSchoolInput = document.getElementById('student-school');
+const studentSubjectInput = document.getElementById('student-subject');
 // DOM elements for quiz
 const quizMainContainer = document.getElementById('quiz-main-container');
 const examContainer = document.getElementById('exam-container');
@@ -24,6 +34,7 @@ const scoreDisplay = document.getElementById('score-display');
 const resultMessage = document.getElementById('result-message');
 const prevBtn = document.getElementById('prev-btn');
 const nextBtn = document.getElementById('next-btn');
+const clearSelectionBtn = document.getElementById('clear-selection-btn');
 const markForReviewBtn = document.getElementById('mark-for-review-btn');
 
 // DOM elements for quiz
@@ -31,7 +42,7 @@ const downloadPdfBtn = document.getElementById('download-pdf-btn')
 
 // Timer elements and variables
 const timeDisplay = document.getElementById('time-display');
-let timeLeft = 60 * 60; // 60 minutes in seconds
+let timeLeft = minutes * 60; // 60 minutes in seconds
 let timerInterval;
 let quizSubmitted = false;
 
@@ -46,21 +57,7 @@ const paletteGrid = document.getElementById('palette-grid');
 const questionPaletteToggleBtn = document.getElementById('question-palette-toggle-btn');
 const closePaletteBtn = document.getElementById('close-palette-btn');
 
-// Function to fetch questions from the Netlify Function
-/*async function fetchQuestions() {
-    try {
-        const response = await fetch('/.netlify/functions/get-questions');
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const questionsData = await response.json(); // Declare a new variable here
-        return questionsData; // Return the data
-    } catch (error) {
-        console.error("Failed to load questions:", error);
-        alert("Could not load quiz questions. Please try again later.");
-        return null; // Return null on error
-    }
-}*/
+
 // --- Initialization ---
 document.addEventListener('DOMContentLoaded', () => {
     // Check if essential DOM elements are found
@@ -105,9 +102,10 @@ if (loginForm) { // Ensure loginForm exists before adding event listener
 
         studentName = studentNameInput.value.trim();
         studentEmail = studentEmailInput.value.trim();
+        studentSchool = studentSchoolInput.value.trim();
+        studentSubject = studentSubjectInput.value.trim();
 
         if (studentName && studentEmail) {
-            
                         
             // Hide the login form
             if (loginContainer) {
@@ -155,7 +153,26 @@ if (loginForm) { // Ensure loginForm exists before adding event listener
     console.error("Login form (ID: 'login-form') not found in the DOM.");
 }
 
+//Function for clear selection
+clearSelectionBtn.addEventListener('click', () => {
+    if (!quizSubmitted) {
+        // Remove the answer for the current question
+        delete userAnswers[currentQuestionIndex];
+        // Mark the question as not answered
+        questionStates[currentQuestionIndex].answered = false;
 
+        // Visually uncheck the selected radio button for the current question
+        const currentQuestionCard = document.getElementById(`question-${currentQuestionIndex}`);
+        if (currentQuestionCard) {
+            const selectedRadio = currentQuestionCard.querySelector(`input[name="question-${currentQuestionIndex}"]:checked`);
+            if (selectedRadio) {
+                selectedRadio.checked = false;
+            }
+        }
+        updateMarkForReviewButtonText(); // Update button text if current question state changes
+        updatePaletteButtonStates(); // Update palette button immediately
+    }
+});
 // Function to start the timer
 function startTimer() {
     timerInterval = setInterval(() => {
@@ -224,18 +241,18 @@ function loadQuestions() {
             const radioInput = document.createElement('input');
             radioInput.type = 'radio';
             radioInput.name = `question-${i}`;
-            radioInput.value = option;
+            radioInput.value = optionIndex; // Store the index as the value
             radioInput.id = `question-${i}-option-${optionIndex}`;
 
             // Set checked state if user has already answered
-            if (userAnswers[i] === option) {
+            if (userAnswers[i] !== undefined && userAnswers[i] === optionIndex) {
                 radioInput.checked = true;
             }
 
             // Only allow changing answers if quiz is not submitted
             if (!quizSubmitted) {
                 radioInput.addEventListener('change', (event) => {
-                    userAnswers[i] = event.target.value;
+                    userAnswers[i] = parseInt(event.target.value); // Parse the value back to an integer
                     questionStates[i].answered = true; // Mark as answered
                     updateMarkForReviewButtonText(); // Update button text if current question state changes
                     updatePaletteButtonStates(); // Update palette button immediately
@@ -246,7 +263,7 @@ function loadQuestions() {
 
 
             const optionSpan = document.createElement('span');
-            optionSpan.innerHTML = option; // Use innerHTML for MathJax
+            optionSpan.innerHTML = indexes[optionIndex]+" " + option; // Use innerHTML for MathJax
 
             optionLabel.appendChild(radioInput);
             optionLabel.appendChild(optionSpan);
@@ -274,7 +291,25 @@ function updateNavigationButtons() {
         return;
     }
     prevBtn.disabled = currentQuestionIndex === 0;
+    if (prevBtn.disabled) {
+        prevBtn.classList.add('text-gray-400', 'hover:text-gray-400', 'cursor-not-allowed');
+        prevBtn.classList.remove('text-blue-500', 'hover:text-blue-700');
+        prevBtn.title = 'You are at the first question';
+    } else {
+        prevBtn.classList.remove('text-gray-400', 'hover:text-gray-400', 'cursor-not-allowed');
+        prevBtn.classList.add('text-blue-500', 'hover:text-blue-700'); // Revert to original styles
+        prevBtn.title = 'Go to previous question';
+    }
     nextBtn.disabled = currentQuestionIndex >= questions.length - questionsPerPage;
+    if (nextBtn.disabled){
+        nextBtn.classList.add('text-gray-400', 'hover:text-gray-400', 'cursor-not-allowed');
+        nextBtn.classList.remove('text-blue-500', 'hover:text-blue-700');
+        nextBtn.title = 'You are at the last question';
+    }else{
+        nextBtn.classList.remove('text-gray-400', 'hover:text-gray-400', 'cursor-not-allowed');
+        nextBtn.classList.add('text-blue-500', 'hover:text-blue-700'); // Revert to original styles
+        nextBtn.title = 'Go to next question';
+    }
 }
 
 // Event listener for previous button
@@ -305,13 +340,15 @@ markForReviewBtn.addEventListener('click', () => {
 // Function to update the text of the Mark for Review button
 function updateMarkForReviewButtonText() {
     if (questionStates[currentQuestionIndex].markedForReview) {
-        markForReviewBtn.textContent = "Unmark for Review";
-        markForReviewBtn.classList.add('bg-purple-500', 'hover:bg-purple-600');
-        markForReviewBtn.classList.remove('bg-yellow-500', 'hover:bg-yellow-600');
+        //markForReviewBtn.textContent = "Unmark for Review";
+        markForReviewBtn.title = "Unmark for Review";
+        markForReviewBtn.classList.add('text-purple-500', 'hover:text-purple-700');
+        markForReviewBtn.classList.remove('text-yellow-500', 'hover:text-yellow-600');
     } else {
-        markForReviewBtn.textContent = "Mark for Review";
-        markForReviewBtn.classList.add('bg-yellow-500', 'hover:bg-yellow-600');
-        markForReviewBtn.classList.remove('bg-purple-500', 'hover:bg-purple-600');
+        //markForReviewBtn.textContent = "Mark for Review";
+        markForReviewBtn.title = "Mark for Review";
+        markForReviewBtn.classList.add('text-yellow-500', 'hover:text-yellow-600');
+        markForReviewBtn.classList.remove('text-purple-500', 'hover:text-purple-600');
     }
 }
 
@@ -358,11 +395,24 @@ cancelSubmitBtn.addEventListener('click', () => {
 // --- NEW FUNCTIONALITY START ---
 // Function to calculate score, display results, and send data
 function calculateScore() {
+    const negativeMarking = negativePerQuestion; // Set the negative marking value here
+    const positiveMarking = positivePerQuestion; //Marks per Question
     let score = 0;
-    const fullMarks = questions.length;
+    let noOfCorrect =0;
+    let noOfWrong = 0;
+    let noOfSkipped = questions.length;
+    const fullMarks = questions.length * positiveMarking;
     questions.forEach((q, index) => {
-        if (userAnswers[index] === q.answer) {
-            score++;
+        if (userAnswers[index] !== undefined) { // Check if an answer was provided
+            if (userAnswers[index] === q.answer) {
+                score+= positiveMarking;
+                noOfCorrect+= 1;
+                noOfSkipped-= 1;
+            } else {
+                score -= negativeMarking;
+                noOfWrong+= 1;
+                noOfSkipped-= 1;
+            }
         }
     });
 
@@ -373,11 +423,17 @@ function calculateScore() {
     sendToGoogleSheet({
         name: studentName,
         email: studentEmail,
+        subject: studentSubject,
+        school: studentSchool,
+        correct: noOfCorrect,
+        wrong: noOfWrong,
+        skipped: noOfSkipped,
         score: score,
         fullMarks: fullMarks,
         percentage: percentage.toFixed(2),
         timestamp: submissionTime
     });
+
 
     // Update the UI
     scoreDisplay.textContent = score;
@@ -397,14 +453,14 @@ function calculateScore() {
         resultMessage.className = 'mt-2 text-red-600 font-bold';
     }
 
-    scoreCard.style.display = 'block'; // Show the score card
+   // scoreCard.style.display = 'block'; // Show the score card
 }
 
 // Function to send data to the Google Apps Script
 async function sendToGoogleSheet(data) {
     // ⚠️ IMPORTANT: Replace 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE' with your actual deployed script URL.
  
-const gasURL = 'https://script.google.com/macros/s/AKfycbwWTgS79hc3sHMV7T2z4SephHJDOdN53crtuxyLaOTnHWt-CKeg0vCU2uLZQAM8ElqkZA/exec';
+const gasURL = 'https://script.google.com/macros/s/AKfycbz0WIGL00LfMqZ4fwyRlKQoD6Lk0gb2jKX_czcAGKQqi-jzCNuiy1frLi2N7icxS9lL/exec';
     try {
         const response = await fetch(gasURL, {
             method: 'POST',
@@ -426,9 +482,20 @@ const gasURL = 'https://script.google.com/macros/s/AKfycbwWTgS79hc3sHMV7T2z4Seph
 function displayResults() {
     // Reload all questions to ensure correct/wrong answers are highlighted for all questions,
     // not just the currently displayed ones.
+    scoreCard.style.display = 'block'; // Show the score card
+    examContainer.innerHTML = ''; // Clear the current question view
+    //Creating div and inside this a h2 containing All questions heading
+    const resultHeadContainer = document.createElement('div');
+    resultHeadContainer.className = 'result-head-div';
+    const resultHeadText = document.createElement('h2');
+    resultHeadText.className = 'result-head-h2';
+    resultHeadText.innerHTML = 'Report of All Questions'
+    resultHeadContainer.appendChild(resultHeadText);
+    
+
     const allQuestionsContainer = document.createElement('div');
     allQuestionsContainer.id = 'all-questions-results'; // Temporary container
-
+    allQuestionsContainer.appendChild(resultHeadContainer)
     questions.forEach((q, index) => {
         const questionCard = document.createElement('div');
         questionCard.className = 'question-card';
@@ -439,17 +506,17 @@ function displayResults() {
         questionText.innerHTML = `Q${index + 1}: ${q.question}`;
         questionCard.appendChild(questionText);
 
-        q.options.forEach((option) => {
+        q.options.forEach((option, optionIndex) => {
             const optionLabel = document.createElement('label');
             optionLabel.className = 'option-label';
 
             const optionSpan = document.createElement('span');
-            optionSpan.innerHTML = option;
+            optionSpan.innerHTML = indexes[optionIndex]+" "+option;
 
             optionLabel.appendChild(optionSpan);
 
-            // Mark correct answer
-            if (option === q.answer) {
+            // Mark correct answer based on index
+            if (optionIndex === q.answer) {
                 optionLabel.classList.add('correct-answer');
                 const correctTextSpan = document.createElement('span');
                 correctTextSpan.className = 'correct-text ml-2';
@@ -457,8 +524,8 @@ function displayResults() {
                 optionLabel.appendChild(correctTextSpan);
             }
 
-            // Mark user's wrong answer
-            if (userAnswers[index] === option && userAnswers[index] !== q.answer) {
+            // Mark user's wrong answer based on index
+            if (userAnswers[index] !== undefined && userAnswers[index] === optionIndex && userAnswers[index] !== q.answer) {
                 optionLabel.classList.add('wrong-answer');
                 const wrongTextSpan = document.createElement('span');
                 wrongTextSpan.className = 'wrong-text ml-2';
@@ -468,10 +535,11 @@ function displayResults() {
 
             questionCard.appendChild(optionLabel);
         });
+        
         allQuestionsContainer.appendChild(questionCard);
     });
 
-    examContainer.innerHTML = ''; // Clear the current question view
+    //examContainer.innerHTML = ''; // Clear the current question view
     examContainer.appendChild(allQuestionsContainer); // Add all questions for review
 
     // Update MathJax rendering for newly added questions in result view
@@ -489,6 +557,7 @@ function disableQuiz() {
     submitQuizBtn.classList.add('opacity-50', 'cursor-not-allowed');
     prevBtn.style.display = 'none'; // Hide navigation buttons after submission
     submitQuizBtn.style.display = 'none';
+    clearSelectionBtn.style.display = 'none'; // Hide clear selection button
     questionPaletteToggleBtn.style.display = 'none';
     nextBtn.style.display = 'none';
     markForReviewBtn.style.display = 'none'; // Hide mark for review button

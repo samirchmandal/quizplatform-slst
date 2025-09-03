@@ -148,7 +148,7 @@ exports.handler = async (event, context) => {
   "id": 13,
   "question": "The integrating factor for the differential equation $(x + 3)\\frac{dy}{dx} - y = e^{-x}(x + 3)^2$ is",
   "options": [
-    "$log(x + 3)$",
+    "$\\log(x + 3)$",
     "$(x + 3)^2$",
     "$\\frac{1}{(x+3)^2}$",
     "$\\frac{1}{x+3}$"

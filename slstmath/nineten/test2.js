@@ -622,7 +622,10 @@ function toggleQuestionPalette() {
 // Function to handle PDF generation using the browser's print dialog
 function generatePDF() {
     // The window.print() method opens the browser's print dialog.
+    let oldTitle = document.title;
+    document.title = document.getElementById('quiz-title').innerHTML;
     window.print();
+    document.title = oldTitle;
 }
 
 // Event listener for the download button

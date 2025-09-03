@@ -1,9 +1,9 @@
-const questions = await fetch('../../.netlify/functions/slst910test1').then(response=> response.json())
+const questions = await fetch('../../.netlify/functions/slst910test2').then(response=> response.json())
 // Global variables to store student information
 let studentName = '';
 let studentEmail = '';
-let minutes = 90; // Numer of minutes for the exam
-let indexes = ["<span class = 'font-bold'>(A)</span>","<span class = 'font-bold'>(B)</span>","<span class = 'font-bold'>(C)</span>","<span class = 'font-bold'>(D)</span>"];
+let minutes = 1; // Numer of minutes for the exam
+let indexes = ["(A)","(B)","(C)","(D)"]
 
 //Global Variables to set positive and negative markings
 let negativePerQuestion = 0  //negative marking per Question
@@ -393,17 +393,24 @@ function calculateScore() {
     const negativeMarking = negativePerQuestion; // Set the negative marking value here
     const positiveMarking = positivePerQuestion; //Marks per Question
     let score = 0;
+    let noOfCorrect =0;
+    let noOfWrong = 0;
+    let noOfSkipped = questions.length;
     const fullMarks = questions.length * positiveMarking;
     questions.forEach((q, index) => {
         if (userAnswers[index] !== undefined) { // Check if an answer was provided
             if (userAnswers[index] === q.answer) {
                 score+= positiveMarking;
+                noOfCorrect+= 1;
+                noOfSkipped-= 1;
             } else {
                 score -= negativeMarking;
+                noOfWrong+= 1;
+                noOfSkipped-= 1;
             }
         }
     });
-
+    const attempted = questions.length - noOfSkipped;
     const percentage = (score / fullMarks) * 100;
     const submissionTime = new Date().toLocaleString();
 
@@ -412,6 +419,9 @@ function calculateScore() {
         name: studentName,
         email: studentEmail,
         score: score,
+        correct: noOfCorrect,
+        wrong: noOfWrong,
+        skipped: noOfSkipped,
         fullMarks: fullMarks,
         percentage: percentage.toFixed(2),
         timestamp: submissionTime
@@ -419,8 +429,7 @@ function calculateScore() {
 
 
     // Update the UI
-    scoreDisplay.textContent = score;
-    scoreDisplay.textContent = `Hi ${studentName}, You scored ${score} out of ${fullMarks}! Your percentage is ${percentage.toFixed(2)}%.`;
+    scoreDisplay.textContent = `Hi ${studentName}, You scored ${score} out of ${fullMarks}! Your percentage is ${percentage.toFixed(2)}%. Out of 60 questions you attempted ${attempted} questions and out of which ${noOfCorrect} are correct and ${noOfWrong} are wrong.`;
 
     if (score === fullMarks) {
         resultMessage.textContent = "Excellent! You got all the answers correct!";
@@ -523,7 +532,7 @@ function displayResults() {
             explaination.innerHTML = "<span class = 'font-bold'>Explanation: </span>"+ q.explanation;
             explaination.classList.add('explanation')
             questionCard.appendChild(explaination);}
-        allQuestionsContainer.appendChild(questionCard);        
+        allQuestionsContainer.appendChild(questionCard);
     });
 
     //examContainer.innerHTML = ''; // Clear the current question view

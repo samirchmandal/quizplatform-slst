@@ -429,7 +429,8 @@ function calculateScore() {
 
 
     // Update the UI
-    scoreDisplay.textContent = `Hi ${studentName}, You scored ${score} out of ${fullMarks}! Your percentage is ${percentage.toFixed(2)}%. Out of 60 questions you attempted ${attempted} questions and out of which ${noOfCorrect} are correct and ${noOfWrong} are wrong.`;
+
+    scoreDisplay.textContent = `Hi ${studentName}, You scored **${score}** out of ${fullMarks}! Your percentage is **${percentage.toFixed(2)}%**. Out of 60 questions you attempted **${attempted}** questions and out of which **${noOfCorrect}** is/are correct and **${noOfWrong}** is/are wrong.`;
 
     if (score === fullMarks) {
         resultMessage.textContent = "Excellent! You got all the answers correct!";

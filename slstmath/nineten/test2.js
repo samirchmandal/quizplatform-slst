@@ -2,8 +2,8 @@ const questions = await fetch('../../.netlify/functions/slst910test2').then(resp
 // Global variables to store student information
 let studentName = '';
 let studentEmail = '';
-let minutes = 1; // Numer of minutes for the exam
-let indexes = ["(A)","(B)","(C)","(D)"]
+let minutes = 90; // Numer of minutes for the exam
+let indexes = ["<span class = 'font-bold'>(A)</span>","<span class = 'font-bold'>(B)</span>","<span class = 'font-bold'>(C)</span>","<span class = 'font-bold'>(D)</span>"];
 
 //Global Variables to set positive and negative markings
 let negativePerQuestion = 0  //negative marking per Question

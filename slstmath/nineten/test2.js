@@ -190,6 +190,7 @@ function startTimer() {
 // Function to auto-submit the quiz when time runs out
 function autoSubmitQuiz() {
     quizSubmitted = true;
+    document.title = "Quiz auto Submitted";
     calculateScore();
     displayResults();
     disableQuiz();
@@ -369,6 +370,7 @@ submitQuizBtn.addEventListener('click', () => {
 confirmSubmitBtn.addEventListener('click', () => {
     hideModal(confirmationModal);
     quizSubmitted = true;
+    document.title = 'Quiz Submitted';
     clearInterval(timerInterval); // Stop the timer
     calculateScore();
     displayResults();

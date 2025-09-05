@@ -28,7 +28,12 @@ const examContainer = document.getElementById('exam-container');
 const submitQuizBtn = document.getElementById('submit-quiz');
 const scoreCard = document.getElementById('score-card');
 const scoreDisplay = document.getElementById('score-display');
+const questionsAttempted = document.getElementById('questionsAttempted');
+const questionsCorrect = document.getElementById('questionsCorrect');
+const questionsWrong = document.getElementById('questionsWrong');
+const questionsSkipped = document.getElementById('questionsSkipped');
 const marksObtained = document.getElementById('marksObtained');
+const percentageInHtml = document.getElementById('percentageInHtml');
 const resultMessage = document.getElementById('result-message');
 const prevBtn = document.getElementById('prev-btn');
 const nextBtn = document.getElementById('next-btn');
@@ -435,11 +440,15 @@ function calculateScore() {
     let student_name = document.getElementById('student-name');
     student_name.innerHTML = studentName;
     scoreDisplay.textContent = `Hi ${studentName}, your test performance is as follows`;
+    questionsAttempted.textContent = noOfCorrect + noOfWrong;
+    questionsCorrect.textContent = noOfCorrect;
+    questionsWrong.textContent = noOfWrong;
+    questionsSkipped.textContent = noOfSkipped;
     marksObtained.textContent = score;
+    percentageInHtml.textContent = percentage.toFixed(2);
 
     // scoreDisplay.textContent = `Hi ${studentName}, You scored **${score}** out of ${fullMarks}! Your percentage is **${percentage.toFixed(2)}%**. Out of 60 questions you attempted **${attempted}** questions and out of which **${noOfCorrect}** is/are correct and **${noOfWrong}** is/are wrong.`;
     
-
 
     if (score === fullMarks) {
         resultMessage.textContent = "Excellent! You got all the answers correct!";

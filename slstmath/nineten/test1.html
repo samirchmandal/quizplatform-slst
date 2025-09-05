@@ -1,134 +1,264 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quiz Ongoing</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" href="../../icons/light-bulb-red.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      rel="icon"
+      href="../../icons/light-bulb-red.svg"
+      type="image/svg+xml"
+    />
     <script>
-        // MathJax configuration for inline dollar signs
-        MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']]
-            },
-            svg: {
-                fontCache: 'global'
-            }
-        };
+      // MathJax configuration for inline dollar signs
+      MathJax = {
+        tex: {
+          inlineMath: [
+            ['$', '$'],
+            ['\\(', '\\)'],
+          ],
+        },
+        svg: {
+          fontCache: 'global',
+        },
+      }
     </script>
-    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-</head>
-<body class="relative"> 
+  </head>
+  <body class="relative">
     <!-- Login Container - Shown by default -->
-    <div id="login-container" class="flex items-center justify-center min-h-screen bg-gray-100">
-        <div class="login-card bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
-            <h2 class="text-3xl font-bold text-center mb-6 text-blue-700">Student Login</h2>
-            <form id="login-form">
-                <div class="mb-5">
-                    <label for="student-name" class="block text-gray-700 text-sm font-semibold mb-2">Name:</label>
-                    <input type="text" id="student-name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                </div>
-                <div class="mb-6">
-                    <label for="student-email" class="block text-gray-700 text-sm font-semibold mb-2">Email:</label>
-                    <input type="email" id="student-email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                </div>
-                <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold text-lg hover:bg-blue-700 transition-colors duration-300">Start Quiz</button>
-            </form>
-        </div>
+    <div
+      id="login-container"
+      class="flex items-center justify-center min-h-screen bg-gray-100"
+    >
+      <div class="login-card bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
+        <h2 class="text-3xl font-bold text-center mb-6 text-blue-700">
+          Student Login
+        </h2>
+        <form id="login-form">
+          <div class="mb-5">
+            <label
+              for="student-name"
+              class="block text-gray-700 text-sm font-semibold mb-2"
+              >Name:</label
+            >
+            <input
+              type="text"
+              id="student-name"
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+          <div class="mb-6">
+            <label
+              for="student-email"
+              class="block text-gray-700 text-sm font-semibold mb-2"
+              >Email:</label
+            >
+            <input
+              type="email"
+              id="student-email"
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold text-lg hover:bg-blue-700 transition-colors duration-300"
+          >
+            Start Quiz
+          </button>
+        </form>
+      </div>
     </div>
 
     <!-- Main Quiz Container - Hidden by default -->
     <div id="quiz-main-container" class="hidden">
-        <!-- Question Palette Toggle Button -->
-        <button id="question-palette-toggle-btn" class="fixed top-1/2 left-0 -translate-y-1/2 bg-blue-600 text-white p-3 rounded-r-lg shadow-lg z-20 hover:bg-blue-700 transition-all duration-300 transform -translate-x-0 focus:outline-none">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+      <!-- Question Palette Toggle Button -->
+      <button
+        id="question-palette-toggle-btn"
+        class="fixed top-1/2 left-0 -translate-y-1/2 bg-blue-600 text-white p-3 rounded-r-lg shadow-lg z-20 hover:bg-blue-700 transition-all duration-300 transform -translate-x-0 focus:outline-none"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+
+      <!-- Question Palette -->
+      <div
+        id="question-palette"
+        class="fixed top-0 left-0 h-full w-64 bg-gray-800 text-white shadow-xl transform -translate-x-full transition-transform duration-300 ease-in-out z-30 overflow-y-auto p-4"
+      >
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold">Questions</h3>
+          <button
+            id="close-palette-btn"
+            class="text-gray-400 hover:text-white focus:outline-none"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
-        </button>
-
-        <!-- Question Palette -->
-        <div id="question-palette" class="fixed top-0 left-0 h-full w-64 bg-gray-800 text-white shadow-xl transform -translate-x-full transition-transform duration-300 ease-in-out z-30 overflow-y-auto p-4">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-bold">Questions</h3>
-                <button id="close-palette-btn" class="text-gray-400 hover:text-white focus:outline-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-            <div id="palette-grid" class="grid grid-cols-5 gap-2">
-                <!-- Question numbers will be generated here -->
-            </div>
-            <div class="mt-4 pt-4 border-t border-gray-700">
-                <h4 class="text-lg font-semibold mb-2">Legend:</h4>
-                <div class="space-y-1 text-sm">
-                    <div class="flex items-center">
-                        <span class="w-4 h-4 rounded-sm bg-green-500 mr-2"></span> Answered
-                    </div>
-                    <div class="flex items-center">
-                        <span class="w-4 h-4 rounded-sm bg-purple-500 mr-2"></span> Answered & Marked
-                    </div>
-                    <div class="flex items-center">
-                        <span class="w-4 h-4 rounded-sm bg-yellow-500 mr-2"></span> Marked for Review
-                    </div>
-                    <div class="flex items-center">
-                        <span class="w-4 h-4 rounded-sm bg-gray-600 mr-2"></span> Not Visited
-                    </div>
-                    <div class="flex items-center">
-                        <span class="w-4 h-4 rounded-sm bg-blue-500 mr-2"></span> Current Question
-                    </div>
-                </div>
-            </div>
+          </button>
         </div>
-
-        <div class="container">
-            <h1 id = 'quiz-title' class="text-3xl font-bold text-center mb-6 text-blue-700">SLST Mathematics 9-10 Full Test 1</h1>
-            <div class="flex justify-end mb-4">
-                <div id="timer" class="text-lg font-semibold text-red-600 bg-red-100 p-2 rounded-md shadow-sm">
-                    Time Left: <span id="time-display">60:00</span>
-                </div>
-            </div>
-            <!--After Quiz-->
-            <div id="score-card" class="score-card">
-                <h2 id = "score-display"></h2>
-                <p id="result-message" class="mt-2"></p>
-                <!-- Download as pdf button -->
-                <button id="download-pdf-btn" class="mt-4 bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg font-semibold">Download as PDF</button> 
-            </div>
-            <div id="exam-container">
-                <!-- Questions will be loaded here by JavaScript -->
-            </div>
-            <div class="navigation-buttons flex justify-between items-center mt-6">
-                <i id ="prev-btn" title="Go to Previous Question" class="fa-solid fa-circle-left text-blue-500 hover:text-blue-700 text-3xl cursor-pointer"></i>
-                <!--<button id="prev-btn" class="nav-btn bg-gray-500 hover:bg-gray-600 px-6 py-2 rounded-lg text-white font-semibold">Previous</button>-->
-                <i id ="clear-selection-btn" title="Clear Selection" class="fa-solid fa-eraser text-red-500 hover:text-red-700 text-3xl cursor-pointer"></i>
-                <!--<button id="clear-selection-btn" class="nav-btn bg-red-500 hover:bg-red-600 px-6 py-2 rounded-lg text-white font-semibold">Clear Selection</button> -->
-                <i id ="mark-for-review-btn" title="Mark for Review" class="fa-solid fa-circle-question text-yellow-500 hover:text-yellow-700 text-3xl cursor-pointer"></i>
-                <!-- <button id="mark-for-review-btn" class="nav-btn bg-yellow-500 hover:bg-yellow-600 px-6 py-2 rounded-lg text-white font-semibold">Mark for Review</button>-->
-                <i id ="next-btn" title="Go to Next Question" class ="fa-solid fa-circle-right text-blue-500 hover:text-blue-700 text-3xl cursor-pointer"></i>
-                <!--<button id="next-btn" class="nav-btn bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded-lg text-white font-semibold">Next</button>-->
-            </div>
-            <button id="submit-quiz" class="submit-btn">Submit Quiz</button>
-            
+        <div id="palette-grid" class="grid grid-cols-5 gap-2">
+          <!-- Question numbers will be generated here -->
         </div>
+        <div class="mt-4 pt-4 border-t border-gray-700">
+          <h4 class="text-lg font-semibold mb-2">Legend:</h4>
+          <div class="space-y-1 text-sm">
+            <div class="flex items-center">
+              <span class="w-4 h-4 rounded-sm bg-green-500 mr-2"></span>
+              Answered
+            </div>
+            <div class="flex items-center">
+              <span class="w-4 h-4 rounded-sm bg-purple-500 mr-2"></span>
+              Answered & Marked
+            </div>
+            <div class="flex items-center">
+              <span class="w-4 h-4 rounded-sm bg-yellow-500 mr-2"></span> Marked
+              for Review
+            </div>
+            <div class="flex items-center">
+              <span class="w-4 h-4 rounded-sm bg-gray-600 mr-2"></span> Not
+              Visited
+            </div>
+            <div class="flex items-center">
+              <span class="w-4 h-4 rounded-sm bg-blue-500 mr-2"></span> Current
+              Question
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <h1
+          id="quiz-title"
+          class="text-3xl font-bold text-center mb-6 text-blue-700"
+        >
+          SLST Mathematics 9-10 Full Test 1
+        </h1>
+        <div class="flex justify-end mb-4">
+          <div
+            id="timer"
+            class="text-lg font-semibold text-red-600 bg-red-100 p-2 rounded-md shadow-sm"
+          >
+            Time Left: <span id="time-display">60:00</span>
+          </div>
+        </div>
+        <!--After Quiz-->
+        <div id="score-card" class="score-card">
+          <h2 id="score-display">Hi <span id = 'student-name'></span>, your test performance is as follows</h2>
+          <div id="score-table">
+            <table>
+              <tr>
+                <th>No of Questions</th>
+                <th>Attempted</th>
+                <th>Correct</th>
+                <th>Wrong</th>
+                <th>Skipped</th>
+                <th>Marks obtained</th>
+                <th>Percentage</th>
+              </tr>
+              <tr>
+                <td>60</td>
+                <td id = 'attemted'>32</td>
+                <td id = 'correct'>24</td>
+                <td id = 'wrong'>8</td>
+                <td id = 'skipped'>28</td>
+                <td id = 'score'>32</td>
+                <td id = 'percentage'>15%</td>
+              </tr>
+            </table>
+          </div>
+          <p id="result-message" class="mt-2"></p>
+          <!-- Download as pdf button -->
+          <button
+            id="download-pdf-btn"
+            class="mt-4 bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg font-semibold"
+          >
+            Download as PDF
+          </button>
+        </div>
+        <div id="exam-container">
+          <!-- Questions will be loaded here by JavaScript -->
+        </div>
+        <div class="navigation-buttons flex justify-between items-center mt-6">
+          <i
+            id="prev-btn"
+            title="Go to Previous Question"
+            class="fa-solid fa-circle-left text-blue-500 hover:text-blue-700 text-3xl cursor-pointer"
+          ></i>
+          <!--<button id="prev-btn" class="nav-btn bg-gray-500 hover:bg-gray-600 px-6 py-2 rounded-lg text-white font-semibold">Previous</button>-->
+          <i
+            id="clear-selection-btn"
+            title="Clear Selection"
+            class="fa-solid fa-eraser text-red-500 hover:text-red-700 text-3xl cursor-pointer"
+          ></i>
+          <!--<button id="clear-selection-btn" class="nav-btn bg-red-500 hover:bg-red-600 px-6 py-2 rounded-lg text-white font-semibold">Clear Selection</button> -->
+          <i
+            id="mark-for-review-btn"
+            title="Mark for Review"
+            class="fa-solid fa-circle-question text-yellow-500 hover:text-yellow-700 text-3xl cursor-pointer"
+          ></i>
+          <!-- <button id="mark-for-review-btn" class="nav-btn bg-yellow-500 hover:bg-yellow-600 px-6 py-2 rounded-lg text-white font-semibold">Mark for Review</button>-->
+          <i
+            id="next-btn"
+            title="Go to Next Question"
+            class="fa-solid fa-circle-right text-blue-500 hover:text-blue-700 text-3xl cursor-pointer"
+          ></i>
+          <!--<button id="next-btn" class="nav-btn bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded-lg text-white font-semibold">Next</button>-->
+        </div>
+        <button id="submit-quiz" class="submit-btn">Submit Quiz</button>
+      </div>
     </div>
 
     <!-- Custom Confirmation Modal -->
     <div id="confirmation-modal" class="modal">
-        <div class="modal-content">
-            <h3>Confirm Submission</h3>
-            <p>Are you sure you want to submit the quiz? You will not be able to change your answers after submission.</p>
-            <div class="modal-buttons">
-                <button class="modal-btn confirm" id="confirm-submit">Submit</button>
-                <button class="modal-btn cancel" id="cancel-submit">Cancel</button>
-            </div>
+      <div class="modal-content">
+        <h3>Confirm Submission</h3>
+        <p>
+          Are you sure you want to submit the quiz? You will not be able to
+          change your answers after submission.
+        </p>
+        <div class="modal-buttons">
+          <button class="modal-btn confirm" id="confirm-submit">Submit</button>
+          <button class="modal-btn cancel" id="cancel-submit">Cancel</button>
         </div>
+      </div>
     </div>
-    <script type =  "module" src= "test1.js"></script>
-</body>
+    <script type="module" src="test1.js"></script>
+  </body>
 </html>

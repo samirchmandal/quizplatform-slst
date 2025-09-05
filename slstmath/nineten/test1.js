@@ -432,28 +432,8 @@ function calculateScore() {
 
     // Update the UI
 
-    /*scoreDisplay.textContent = `Hi ${studentName}, You scored **${score}** out of ${fullMarks}! Your percentage is **${percentage.toFixed(2)}%**. Out of 60 questions you attempted **${attempted}** questions and out of which **${noOfCorrect}** is/are correct and **${noOfWrong}** is/are wrong.`;*/
-    scoreDisplay.textContent = `Hi ${studentName}, your test performance is as follows <br> 
-    <table>
-    <tr>
-    <th>No of Questions</th>
-    <th>Attempted</th>
-    <th>Correct</th>
-    <th>Wrong</th>
-    <th>Skipped</th>
-    <th>Marks obtained</th>
-    <th>Percentage</th>
-    </tr>
-    <tr>
-    <td>60</td>
-    <td>${attempted}</td>
-    <td>${noOfCorrect}</td>
-    <td>${noOfWrong}</td>
-    <td>${noOfSkipped}</td>
-    <td>${score}</td>
-    <td>${percentage.toFixed(2)}%</td>
-    </tr>
-    </table>`;
+    scoreDisplay.textContent = `Hi ${studentName}, You scored **${score}** out of ${fullMarks}! Your percentage is **${percentage.toFixed(2)}%**. Out of 60 questions you attempted **${attempted}** questions and out of which **${noOfCorrect}** is/are correct and **${noOfWrong}** is/are wrong.`;
+    
 
 
     if (score === fullMarks) {

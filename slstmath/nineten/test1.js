@@ -28,6 +28,7 @@ const examContainer = document.getElementById('exam-container');
 const submitQuizBtn = document.getElementById('submit-quiz');
 const scoreCard = document.getElementById('score-card');
 const scoreDisplay = document.getElementById('score-display');
+const scoreTable = document.getElementById('score-table');
 const resultMessage = document.getElementById('result-message');
 const prevBtn = document.getElementById('prev-btn');
 const nextBtn = document.getElementById('next-btn');
@@ -433,6 +434,22 @@ function calculateScore() {
     // Update the UI
     let student_name = document.getElementById('student-name');
     student_name.innerHTML = studentName;
+    scoreDisplay.textContent = `Hi ${studentName}, your test performance is as follows`;
+    let resultTable = `<table>
+            <thead>
+              <tr>
+                <th>No of Questions</th>
+                <th>Attempted</th>
+                <th>Correct</th>
+                <th>Wrong</th>
+                <th>Skipped</th>
+                <th>Marks obtained</th>
+                <th>Percentage</th>
+              </tr>
+              </thead>`;
+    resultTable+=`</table>`;
+    scoreTable.textContent = resultTable;
+
     // scoreDisplay.textContent = `Hi ${studentName}, You scored **${score}** out of ${fullMarks}! Your percentage is **${percentage.toFixed(2)}%**. Out of 60 questions you attempted **${attempted}** questions and out of which **${noOfCorrect}** is/are correct and **${noOfWrong}** is/are wrong.`;
     
 

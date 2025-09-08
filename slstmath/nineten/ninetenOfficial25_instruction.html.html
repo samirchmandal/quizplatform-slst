@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Instructions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="icon" href="../../icons/light-bulb-yellow.svg" type="image/svg+xml">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: #f3f4f6;
+      }
+      .container-main {
+        max-width: 1000px;
+      }
+      .prose ol li {
+        margin-bottom: 0.5rem;
+      }
+      .prose ul li {
+        margin-bottom: 0.5rem;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+    <div
+      class="container-main bg-white rounded-lg shadow-xl p-8 md:p-12 border border-gray-200"
+    >
+      <!-- Header -->
+      <header class="mb-8 pb-4 border-b border-gray-300">
+        <h1 class="text-3xl font-bold text-center text-gray-800">
+          General Instructions
+        </h1>
+      </header>
+
+      <!-- Quiz Details -->
+      <div class="flex flex-col m-2">
+        <h3 class = "text-center text-blue-600 text-xl font-bold mb-2">Quiz: SLST Mathematics 9-10 Full Test 2</h3>
+        <div class="flex justify-around">
+          <div><span class = "font-bold">Full marks:</span> 60</div>
+          <div><span class = "font-bold">Avaiable time:</span> 90 minutes</div>
+        </div>
+      </div>
+
+      <!-- Instruction Content -->
+      <div class="prose max-w-none text-gray-700">
+        <h4 class="text-lg font-bold mt-6 mb-2">
+          <u>Please read the instructions carefully:</u>
+        </h4>
+        <ol class="list-decimal list-inside pl-4 space-y-2">
+          <li>
+            The test contains **60 questions**. Each question carries one mark each.
+            There is no negative marking.
+          </li>
+          <li>
+            The test duration is **90 minutes**. The countdown timer in the top
+            right corner of the screen will display the remaining time. The test
+            will end automatically when the timer reaches zero.
+          </li>
+    
+          <li>
+            To answer a question, you just need to tap or click anywhere on the
+            line where the correct option is present.
+          </li>
+          <li>
+            You can click on a question number in the Question Palette, which looks like a blue rectangle with three
+            horizontal white lines (see image below), to
+            navigate to it directly.
+          </li>
+          <li>
+            The questions you have "Answered and Marked for Review" will be
+            considered for evaluation.
+          </li>
+          <li>
+            Submit Quiz only when you have visited all the questions.
+          </li>
+          <li>
+            After submission you can see your score and download (save as pdf) the question paper as a pdf.
+          </li>
+        </ol>
+        <h4 class="text-lg font-bold mt-6 mb-2">
+          <button class="bg-blue-600 text-white p-1 rounded-r-md">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-3 w-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+          <u>Question Palette Symbols:</u>
+        </h4>
+        <ul class="list-none space-y-2 pl-4">
+          <li class="flex items-start">
+            <span
+              class="w-4 h-4 aspect-square rounded-sm bg-gray-600 mr-3 mt-1"
+            ></span>
+            <span
+              >You have not visited the question yet or you skipped the
+              question.</span
+            >
+          </li>
+          <li class="flex items-start">
+            <span
+              class="w-4 h-4 aspect-square rounded-sm bg-yellow-500 mr-3 mt-1"
+            ></span>
+            <span
+              >You have not answered the question but you marked for reviewing
+              later.</span
+            >
+          </li>
+          <li class="flex items-start">
+            <span
+              class="w-4 h-4 aspect-square rounded-sm bg-purple-500 mr-3 mt-1"
+            ></span>
+            <span
+              >You have answered and marked the question for review because you
+              may have some doubt.</span
+            >
+          </li>
+          <li class="flex items-start">
+            <span
+              class="w-4 h-4 aspect-square rounded-sm bg-green-500 mr-3 mt-1"
+            ></span>
+            <span>You have answered the question without any doubt.</span>
+          </li>
+          <li class="flex items-start">
+            <span
+              class="w-4 h-4 aspect-square rounded-sm bg-blue-500 mr-3 mt-1"
+            ></span>
+            <span>It shows the question you are currently looking.</span>
+          </li>
+        </ul>
+
+        <h4 class="text-lg font-bold mt-6 mb-2"><u>Buttons:</u></h4>
+        <p>
+          There are four buttons bottom to each question. They are as follows
+        </p>
+        <div class="flex justify-around items-center mt-2 mb-2">
+          <i class="fa-solid fa-circle-left text-blue-500 text-2xl"></i>
+          <i class="fa-solid fa-eraser text-red-500 text-2xl"></i>
+          <i class="fa-solid fa-circle-question text-yellow-500 text-2xl"></i>
+          <i class="fa-solid fa-circle-right text-blue-500 text-2xl"></i>
+        </div>
+        <ul class="list-none space-y-2 pl-4">
+          <li class="flex items-start">
+            <i class="fa-solid fa-circle-left text-blue-500 text-xl mr-2"></i>
+            <span
+              >This button helps you to go to previous question one by
+              one.</span
+            >
+          </li>
+          <li class="flex items-start">
+            <i class="fa-solid fa-eraser text-red-500 text-xl mr-2"></i>
+            <span
+              >This button helps you to clear selection after you select an
+              option by mistake and you want to skip.</span
+            >
+          </li>
+          <li class="flex items-start">
+            <i
+              class="fa-solid fa-circle-question text-yellow-500 text-xl mr-2"
+            ></i>
+            <span
+              >If you are unsure about a question and would like to return to it
+              later, you may mark it for review.</span
+            >
+          </li>
+          <li class="flex items-start">
+            <i class="fa-solid fa-circle-right text-blue-500 text-xl mr-2"></i>
+            <span
+              >This button helps you to go to next question one by one.</span
+            >
+          </li>
+        </ul>
+
+        <hr class="my-6 border-t border-gray-300" />
+
+        <label class="flex items-start text-gray-800 cursor-pointer">
+          <input
+            type="checkbox"
+            id="consent_checkbox"
+            class="mt-1 mr-2 rounded text-blue-600 focus:ring-blue-500"
+          />
+          <span>
+            I have read and understood the instructions. I agree to the terms
+            and conditions and declare that I am not using any unauthorized
+            devices or materials. I understand that I may be subject to
+            disciplinary action if I violate these rules.
+          </span>
+        </label>
+      </div>
+
+      <!-- Action Button -->
+      <div class="mt-8 flex justify-center">
+        <button
+          id="proceed_button"
+          class="bg-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-blue-700 transition-colors duration-200"
+        >
+          Proceed
+        </button>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById('proceed_button')
+        .addEventListener('click', function () {
+          const consentCheckbox = document.getElementById('consent_checkbox')
+          if (consentCheckbox.checked) {
+            // Get the original query string from the URL
+            const queryString = window.location.search
+
+            // Redirect to the login page, passing the original query string
+            // This ensures the login page knows which quiz to start after the student logs in.
+            window.location.href = `ninetenOffical25.html${queryString}`
+          } else {
+            alert('Please accept the terms and conditions before proceeding.')
+          }
+        })
+    </script>
+  </body>
+</html>

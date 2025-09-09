@@ -406,7 +406,7 @@ function calculateScore() {
         questions[54].answer = userAnswers[54];
     }
     else{
-        userAnswers = questions[54].answer;
+        userAnswers[54] = questions[54].answer;
     }
     
     questions.forEach((q, index) => {

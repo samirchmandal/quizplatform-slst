@@ -385,9 +385,6 @@ confirmSubmitBtn.addEventListener('click', () => {
     // You can now send this data to a Google Sheet or another backend.
     console.log("Quiz Submitted!");
     console.log("Student Name:", studentName);
-    console.log("Student Email:", studentEmail);
-    console.log("Score:", scoreDisplay.textContent);
-    console.log("Full Marks:", questions.length);
 });
 
 // Event listener for Cancel Submit button in modal
@@ -405,6 +402,8 @@ function calculateScore() {
     let noOfWrong = 0;
     let noOfSkipped = questions.length;
     const fullMarks = questions.length * positiveMarking;
+    questions[54].answer = 0;
+    userAnswers[54] = 0;
     questions.forEach((q, index) => {
         if (userAnswers[index] !== undefined) { // Check if an answer was provided
             if (userAnswers[index] === q.answer) {
@@ -432,7 +431,8 @@ function calculateScore() {
         skipped: noOfSkipped,
         fullMarks: fullMarks,
         percentage: percentage.toFixed(2),
-        timestamp: submissionTime
+        timestamp: submissionTime,
+        userAnswers: userAnswers.JSON.stringify
     });
 
 

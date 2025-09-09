@@ -334,7 +334,7 @@ exports.handler = async (event, context) => {
       "$\\vec{b}$ and $\\vec{a}\\times \\vec{c}$ are parallel."
     ],
     "answer": 3,
-    "explanation": "We use the vector triple product expansion formula: $(\\vec{A}\\times \\vec{B})\\times \\vec{C} = (\\vec{A}\\cdot\\vec{C})\\vec{B} - (\\vec{B}\\cdot\\vec{C})\\vec{A}$. So the given equation becomes $(\\vec{a}\\cdot\\vec{c})\\vec{b} - (\\vec{b}\\cdot\\vec{c})\\vec{a} = (\\vec{a}\\cdot\\vec{c})\\vec{b} - (\\vec{a}\\cdot\\vec{b})\\vec{c}$. This gives $(\\vec{b}\\cdot\\vec{c})\\vec{a} = (\\vec{a}\\cdot\\vec{b})\\vec{c}$. This equation states that the vector $\\vec{a}$ is a scalar multiple of vector $\\vec{c}$, unless the coefficients are zero. This means $\\vec{a}$ and $\\vec{c}$ are parallel or collinear."
+    "explanation": "We use the vector triple product expansion formula: $(\\vec{A}\\times \\vec{B})\\times \\vec{C} = (\\vec{A}\\cdot\\vec{C})\\vec{B} - (\\vec{B}\\cdot\\vec{C})\\vec{A}$. So the given equation becomes $(\\vec{a}\\cdot\\vec{c})\\vec{b} - (\\vec{b}\\cdot\\vec{c})\\vec{a} = (\\vec{a}\\cdot\\vec{c})\\vec{b} - (\\vec{a}\\cdot\\vec{b})\\vec{c}$. This gives $(\\vec{b}\\cdot\\vec{c})\\vec{a} = (\\vec{a}\\cdot\\vec{b})\\vec{c}$. Now we have, $\\vec{b}\\times (\\vec{a}\\times \\vec{c} = (\\vec{b}\\cdot\\vec{c})\\vec{a}-(\\vec{a}\\cdot\\vec{b})\\vec{c}=\\vec{0}.$ Thus option D is correct."
   },
   {
     "id": 29,

@@ -417,6 +417,7 @@ function calculateScore() {
             }
         }
     });
+    questions[54].answer = -1;
     const attempted = questions.length - noOfSkipped;
     const percentage = (score / fullMarks) * 100;
     const submissionTime = new Date().toLocaleString();
@@ -466,6 +467,7 @@ function calculateScore() {
 
    // scoreCard.style.display = 'block'; // Show the score card
 }
+
 
 // Function to send data to the Google Apps Script
 async function sendToGoogleSheet(data) {

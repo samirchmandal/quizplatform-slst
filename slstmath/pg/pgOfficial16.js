@@ -402,8 +402,13 @@ function calculateScore() {
     let noOfWrong = 0;
     let noOfSkipped = questions.length;
     const fullMarks = questions.length * positiveMarking;
-    questions[54].answer = 0;
-    userAnswers[54] = 0;
+    if(userAnswers[54]){
+        questions[54].answer = userAnswers[54];
+    }
+    else{
+        userAnswers = questions[54].answer;
+    }
+    
     questions.forEach((q, index) => {
         if (userAnswers[index] !== undefined) { // Check if an answer was provided
             if (userAnswers[index] === q.answer) {
@@ -417,7 +422,6 @@ function calculateScore() {
             }
         }
     });
-    questions[54].answer = -1;
     const attempted = questions.length - noOfSkipped;
     const percentage = (score / fullMarks) * 100;
     const submissionTime = new Date().toLocaleString();

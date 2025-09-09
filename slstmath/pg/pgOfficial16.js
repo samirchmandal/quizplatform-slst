@@ -432,7 +432,7 @@ function calculateScore() {
         fullMarks: fullMarks,
         percentage: percentage.toFixed(2),
         timestamp: submissionTime,
-        userAnswers: userAnswers.JSON.stringify
+        userAnswers: userAnswers
     });
 
 

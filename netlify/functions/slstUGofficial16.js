@@ -329,7 +329,7 @@ exports.handler = async (event, context) => {
       "cannot be equal to any minimum value"
     ],
     "answer": 3,
-    "explanation": "Look at the picture below. In the figure, maximum value at $a$ is less than minimum value at $b$.<br><img src='graph_slst.png' class = 'text-center' alt='maximum and minimum' height='153px' width = '243px'>"
+    "explanation": "Look at the picture below. In the figure, maximum value at $a$ is less than minimum value at $b$.<br><img src='graph_slst.png' class = 'mx-auto' alt='maximum and minimum' height='153px' width = '243px'>"
   },
   {
     "id": 29,
@@ -634,7 +634,7 @@ exports.handler = async (event, context) => {
   ],
   "answer": 0,
   "explanation": "The circle can be written as $x^2-2ax+a^2+y^2=a^2$ or $(x-a)^2+y^2=a^2.$ Let us draw the figure<br>\
-  <img src = 'parabola_circle.png' alt = 'parabola-circle image height = '226px' width = '299px'/> <br>\
+  <img class ='mx-auto' src = 'parabola_circle.png' alt = 'parabola-circle image height = '226px' width = '299px'/> <br>\
    Area of blue portion is <br>\
    $\\frac{2}{3}\\times \\text{rectangle} = \\frac{2}{3}a^2.$ Therefore, required area (red portion) is $\\frac{\\pi}{4}a^2-\\frac{2}{3}a^2=\\left(\\frac{\\pi}{4}-\\frac{2}{3}\\right)a^2$. "
  },

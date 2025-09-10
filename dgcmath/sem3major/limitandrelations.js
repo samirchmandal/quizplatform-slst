@@ -1,4 +1,4 @@
-const originalQuestions = await fetch('../../.netlify/functions/sem3mcq1').then(response=> response.json())
+const originalQuestions = await fetch('../../.netlify/functions/nbu_ugmath/sem3MJ/sem3mcq1').then(response=> response.json())
 const questions = shuffleArray(originalQuestions);
 // Global variables to store student information
 let studentName = '';

@@ -1,4 +1,4 @@
-const questions = await fetch('../../.netlify/functions/slstmath/pg/slstPGofficial16').then(response=> response.json())
+const questions = await fetch('../../.netlify/functions/slstPGofficial16').then(response=> response.json())
 // Global variables to store student information
 let studentName = '';
 let studentEmail = '';

@@ -4,7 +4,7 @@ const questions = shuffleArray(originalQuestions);
 let studentName = '';
 let studentEmail = '';
 let minutes = 60; // Numer of minutes for the exam
-let indexes = ["<span class = 'font-bold'>(A)</span>","<span class = 'font-bold'>(B)</span>","<span class = 'font-bold'>(C)</span>","<span class = 'font-bold'>(D)</span>"];
+let indexes = ["<strong>(A)</strong>","<strong>(B)</strong>","<strong>(C)</strong>","<strong>(D)</strong>"];
 
 //Global Variables to set positive and negative markings
 let negativePerQuestion = 0  //negative marking per Question
@@ -411,13 +411,8 @@ function calculateScore() {
     let noOfCorrect =0;
     let noOfWrong = 0;
     let noOfSkipped = questions.length;
-    const fullMarks = questions.length * positiveMarking;
-    if(userAnswers[54]){
-        questions[54].answer = userAnswers[54];
-    }
-    else{
-        userAnswers[54] = questions[54].answer;
-    }
+    const fullMarks = questions.length * positiveMarking-2;
+  
     
     questions.forEach((q, index) => {
         if (userAnswers[index] !== undefined) { // Check if an answer was provided
@@ -432,6 +427,7 @@ function calculateScore() {
             }
         }
     });
+    score = Math.min(score, 30);
     const percentage = (score / fullMarks) * 100;
     const submissionTime = new Date().toLocaleString();
 
@@ -484,7 +480,7 @@ function calculateScore() {
 async function sendToGoogleSheet(data) {
     // ⚠️ IMPORTANT: Replace 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE' with your actual deployed script URL.
  
-const gasURL = 'https://script.google.com/macros/s/AKfycbz_aW8zqCZucobFYlJhkcj6qEZmmfZBWeFiBdfP0DHGnwM-efjae2CLEDYozfa7hPXoRQ/exec';
+const gasURL = 'https://script.google.com/macros/s/AKfycby7saphwNzqraADVq_lOod0vAMBCmSbtyQWoDRvGYGbo218-B2HyAya_qdgEl4OlKFH/exec';
     try {
         const response = await fetch(gasURL, {
             method: 'POST',

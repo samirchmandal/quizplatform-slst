@@ -3,7 +3,7 @@ const questions = await fetch('../../.netlify/functions/slst910test1').then(resp
 let studentName = '';
 let studentEmail = '';
 let minutes = 90; // Numer of minutes for the exam
-let indexes = ["<span class = 'font-bold'>(A)</span>","<span class = 'font-bold'>(B)</span>","<span class = 'font-bold'>(C)</span>","<span class = 'font-bold'>(D)</span>"];
+let indexes = ["<strong>(A)</strong>","<strong>(B)</strong>","<strong>(C)</strong>","<strong>(D)</strong>"];
 
 //Global Variables to set positive and negative markings
 let negativePerQuestion = 0  //negative marking per Question

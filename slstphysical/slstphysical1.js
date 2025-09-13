@@ -5,7 +5,7 @@ let studentEmail = '';
 let studentSubject = '';
 let studentSchool = '';
 let minutes = 90; // Numer of minutes for the exam
-let indexes = ["(A)","(B)","(C)","(D)"]
+let indexes = ["<strong>(A)</strong>","<strong>(B)</strong>","<strong>(C)</strong>","<strong>(D)</strong>"];
 
 //Global Variables to set positive and negative markings
 let negativePerQuestion = 0  //negative marking per Question

@@ -402,12 +402,6 @@ function calculateScore() {
     let noOfWrong = 0;
     let noOfSkipped = questions.length;
     const fullMarks = questions.length * positiveMarking;
-    if(userAnswers[54]){
-        questions[54].answer = userAnswers[54];
-    }
-    else{
-        userAnswers[54] = questions[54].answer;
-    }
     
     questions.forEach((q, index) => {
         if (userAnswers[index] !== undefined) { // Check if an answer was provided

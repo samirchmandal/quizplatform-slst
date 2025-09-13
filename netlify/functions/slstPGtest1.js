@@ -564,7 +564,7 @@ exports.handler = async (event, context) => {
     ],
     "answer": 3,
     "explanation": "Because it has just 2 variables, you can do graphical solution. See the feasible area and objective function in the graph below. <br> \
-    <img = src 'lpp-image.png' width = '' alt = 'LPP image'/>"
+    <img = src 'lpp-image.png' width = '202px' alt = 'LPP image'/>"
   },
   {
     "id": 48,

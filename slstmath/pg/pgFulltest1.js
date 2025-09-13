@@ -1,10 +1,10 @@
-const originalQuestions = await fetch('../../.netlify/functions/sem3mcq1').then(response=> response.json())
-const questions = shuffleArray(originalQuestions);
+const questions = await fetch('../../.netlify/functions/slstPGtest1').then(response=> response.json())
 // Global variables to store student information
 let studentName = '';
 let studentEmail = '';
-let minutes = 60; // Numer of minutes for the exam
+let minutes = 90; // Numer of minutes for the exam
 let indexes = ["<strong>(A)</strong>","<strong>(B)</strong>","<strong>(C)</strong>","<strong>(D)</strong>"];
+
 //Global Variables to set positive and negative markings
 let negativePerQuestion = 0  //negative marking per Question
 let positivePerQuestion = 1; //marks for per question
@@ -28,6 +28,12 @@ const examContainer = document.getElementById('exam-container');
 const submitQuizBtn = document.getElementById('submit-quiz');
 const scoreCard = document.getElementById('score-card');
 const scoreDisplay = document.getElementById('score-display');
+const questionsAttempted = document.getElementById('questionsAttempted');
+const questionsCorrect = document.getElementById('questionsCorrect');
+const questionsWrong = document.getElementById('questionsWrong');
+const questionsSkipped = document.getElementById('questionsSkipped');
+const marksObtained = document.getElementById('marksObtained');
+const percentageInHtml = document.getElementById('percentageInHtml');
 const resultMessage = document.getElementById('result-message');
 const prevBtn = document.getElementById('prev-btn');
 const nextBtn = document.getElementById('next-btn');
@@ -168,14 +174,6 @@ clearSelectionBtn.addEventListener('click', () => {
         updatePaletteButtonStates(); // Update palette button immediately
     }
 });
-//Function for shuffling the questions array.
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]]; // Swap elements
-  }
-  return array;
-}
 // Function to start the timer
 function startTimer() {
     timerInterval = setInterval(() => {
@@ -198,6 +196,7 @@ function startTimer() {
 // Function to auto-submit the quiz when time runs out
 function autoSubmitQuiz() {
     quizSubmitted = true;
+    document.title = "Quiz auto Submitted";
     calculateScore();
     displayResults();
     disableQuiz();
@@ -377,6 +376,7 @@ submitQuizBtn.addEventListener('click', () => {
 confirmSubmitBtn.addEventListener('click', () => {
     hideModal(confirmationModal);
     quizSubmitted = true;
+    document.title = 'Quiz Submitted';
     clearInterval(timerInterval); // Stop the timer
     calculateScore();
     displayResults();
@@ -385,9 +385,6 @@ confirmSubmitBtn.addEventListener('click', () => {
     // You can now send this data to a Google Sheet or another backend.
     console.log("Quiz Submitted!");
     console.log("Student Name:", studentName);
-    console.log("Student Email:", studentEmail);
-    console.log("Score:", scoreDisplay.textContent);
-    console.log("Full Marks:", questions.length);
 });
 
 // Event listener for Cancel Submit button in modal
@@ -404,7 +401,14 @@ function calculateScore() {
     let noOfCorrect =0;
     let noOfWrong = 0;
     let noOfSkipped = questions.length;
-    const fullMarks = questions.length * positiveMarking - 2;
+    const fullMarks = questions.length * positiveMarking;
+    if(userAnswers[54]){
+        questions[54].answer = userAnswers[54];
+    }
+    else{
+        userAnswers[54] = questions[54].answer;
+    }
+    
     questions.forEach((q, index) => {
         if (userAnswers[index] !== undefined) { // Check if an answer was provided
             if (userAnswers[index] === q.answer) {
@@ -418,7 +422,7 @@ function calculateScore() {
             }
         }
     });
-    score = Math.min(score, 30);
+    const attempted = questions.length - noOfSkipped;
     const percentage = (score / fullMarks) * 100;
     const submissionTime = new Date().toLocaleString();
 
@@ -426,19 +430,30 @@ function calculateScore() {
     sendToGoogleSheet({
         name: studentName,
         email: studentEmail,
+        score: score,
         correct: noOfCorrect,
         wrong: noOfWrong,
         skipped: noOfSkipped,
-        score: score,
         fullMarks: fullMarks,
         percentage: percentage.toFixed(2),
-        timestamp: submissionTime
+        timestamp: submissionTime,
+        userAnswers: userAnswers
     });
 
 
     // Update the UI
-    scoreDisplay.textContent = score;
-    scoreDisplay.textContent = `Hi ${studentName}, You scored ${score} out of ${fullMarks}! Your percentage is ${percentage.toFixed(2)}%.`;
+    let student_name = document.getElementById('student-name');
+    student_name.innerHTML = studentName;
+    scoreDisplay.textContent = `Hi ${studentName}, your test performance is as follows`;
+    questionsAttempted.textContent = noOfCorrect + noOfWrong;
+    questionsCorrect.textContent = noOfCorrect;
+    questionsWrong.textContent = noOfWrong;
+    questionsSkipped.textContent = noOfSkipped;
+    marksObtained.textContent = score;
+    percentageInHtml.textContent = percentage.toFixed(2);
+
+    // scoreDisplay.textContent = `Hi ${studentName}, You scored **${score}** out of ${fullMarks}! Your percentage is **${percentage.toFixed(2)}%**. Out of 60 questions you attempted **${attempted}** questions and out of which **${noOfCorrect}** is/are correct and **${noOfWrong}** is/are wrong.`;
+    
 
     if (score === fullMarks) {
         resultMessage.textContent = "Excellent! You got all the answers correct!";
@@ -457,11 +472,12 @@ function calculateScore() {
    // scoreCard.style.display = 'block'; // Show the score card
 }
 
+
 // Function to send data to the Google Apps Script
 async function sendToGoogleSheet(data) {
     // ⚠️ IMPORTANT: Replace 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE' with your actual deployed script URL.
  
-const gasURL = 'https://script.google.com/macros/s/AKfycby7saphwNzqraADVq_lOod0vAMBCmSbtyQWoDRvGYGbo218-B2HyAya_qdgEl4OlKFH/exec';
+const gasURL = 'https://script.google.com/macros/s/AKfycbwhVFiXOrJm4glZQxcQR2Oz0Ca1O_aW2yD-coPa6S7HwX0JePkkoDQ8-u5XsllGbDpu-g/exec';
     try {
         const response = await fetch(gasURL, {
             method: 'POST',
@@ -536,7 +552,11 @@ function displayResults() {
 
             questionCard.appendChild(optionLabel);
         });
-        
+        if (q.explanation){
+        const explaination = document.createElement('p');
+            explaination.innerHTML = "<span class = 'font-bold'>Explanation: </span>"+ q.explanation;
+            explaination.classList.add('explanation')
+            questionCard.appendChild(explaination);}
         allQuestionsContainer.appendChild(questionCard);
     });
 
@@ -627,7 +647,10 @@ function toggleQuestionPalette() {
 // Function to handle PDF generation using the browser's print dialog
 function generatePDF() {
     // The window.print() method opens the browser's print dialog.
+    let oldTitle = document.title;
+    document.title = document.getElementById('quiz-title').innerHTML;
     window.print();
+    document.title = oldTitle;
 }
 
 // Event listener for the download button

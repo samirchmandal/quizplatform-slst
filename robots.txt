@@ -2,4 +2,4 @@ User-agent: *
 Disallow: /admin/
 Disallow: /private/
 Disallow: /tmp/
-Sitemap: https://samirscoaching.com/sitemap.xml
+Sitemap: https://www.samirscoaching.com/sitemap.xml

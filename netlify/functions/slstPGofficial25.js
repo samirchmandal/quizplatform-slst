@@ -232,7 +232,7 @@ exports.handler = async (event, context) => {
   },
   {
     "id": 20,
-    "question": "For all $\\alpha, \\beta$ in a Euclidean space V",
+    "question": "For all $\\alpha, \\beta$ in a Euclidean space $V$",
     "options": [
       "$(\\alpha,\\beta)=0$ implies $||\\alpha+\\beta||=||\\alpha-\\beta||$ but not conversely.",
       "$||\\alpha+\\beta||=||\\alpha-\\beta||$ implies $(\\alpha,\\beta)=0$ but not conversely.",

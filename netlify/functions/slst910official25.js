@@ -144,8 +144,8 @@ exports.handler = async (event, context) => {
     "id": 21,
     "question": "In an LPP, the decision variables can take:",
     "options": ["any real values.", "integer values only.", "any non-negative real values.", "non-negative integer values only."],
-    "answer": 2,
-    "explanation": "In Linear Programming Problems (LPP), decision variables ($x_i$'s) are typically assumed to be non-negative real numbers. This is a standard assumption unless the problem specifies otherwise (e.g., in Integer Linear Programming, where variables must be integers)."
+    "answer": 0,
+    "explanation": "In a standard Linear Programming Problems (LPP), decision variables ($x_i$'s) are typically assumed to be non-negative real numbers. But in this question it is not mentioned standard LPP and we have seen that decision variable can be unsigned. So correct answer should be any real values."
   },
   {
     "id": 22,
